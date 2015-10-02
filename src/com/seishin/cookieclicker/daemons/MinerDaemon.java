@@ -19,15 +19,15 @@ public class MinerDaemon extends IdleEn implements Runnable {
     public MinerDaemon() {
         this.cookiesValue = 0.0;
         this.cookiesPerClick = 1.0;
-        this.cookiesPerSecond = 0.1;
+        this.cookiesPerSecond = 1.0;
         
-        factoryCosts = 500.0;
+        factoryCosts = 100.0;
         farmCosts = 50.0;
-        dealerCosts = 1000.0;
+        dealerCosts = 150.0;
         
-        factoryMulti = 1.20;
-        farmMulti = 1.10;
-        dealerMulti = 1.30;
+        factoryMulti = 1.8;
+        farmMulti = 1.2;
+        dealerMulti = 3.5;
     }
 
     @Override

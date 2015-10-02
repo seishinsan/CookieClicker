@@ -26,19 +26,20 @@ public class IdleEn {
     public double dealerMulti;
 
     public void buyFarm() {
-            this.cookiesPerSecond = this.cookiesPerSecond + 0.1;
+            this.cookiesPerSecond = this.cookiesPerSecond + 1.5 + farmCosts/1000 + cookiesPerSecond/100;
             cookiesValue = cookiesValue - farmCosts;
             this.farmCosts = farmCosts * farmMulti;
     }
 
     public void buyFactory() {
-        this.cookiesPerSecond = this.cookiesPerSecond + 1;
+        this.cookiesPerSecond = this.cookiesPerSecond + 5 + factoryCosts/1000 + cookiesPerSecond/100;
         cookiesValue = cookiesValue - factoryCosts;
         this.factoryCosts = factoryCosts * factoryMulti;
     }
 
     public void buyDealer() {
-        this.cookiesPerClick = this.cookiesPerClick + 1;
+        this.cookiesPerClick = this.cookiesPerClick + 6.3 + dealerCosts/1000 + cookiesPerClick/100;
+        this.cookiesPerSecond = this.cookiesPerSecond + 12 + dealerCosts/1000 + cookiesPerSecond/100;
         cookiesValue = cookiesValue - dealerCosts;
         this.dealerCosts = dealerCosts * dealerMulti;
     }
