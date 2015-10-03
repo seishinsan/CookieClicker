@@ -7,6 +7,7 @@ package com.seishin.cookieclicker;
 
 import com.seishin.cookieclicker.Windows.MainWindow;
 import com.seishin.cookieclicker.daemons.MinerDaemon;
+import java.io.IOException;
 
 /**
  *
@@ -17,14 +18,13 @@ public class CookieClicker {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
         MainWindow mainWindow = new MainWindow();
         Thread renderThread = new Thread(mainWindow);
         mainWindow.setVisible(true);
         renderThread.start();
-        
-        //TODO: Speicherfunktion einbauen
+        //TODO: Preis von Gebäuden nach gameload fehlerhaft (zu viele nachkommastellen)
     }
 
 }

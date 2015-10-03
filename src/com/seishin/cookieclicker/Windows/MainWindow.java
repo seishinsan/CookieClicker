@@ -6,7 +6,10 @@
 package com.seishin.cookieclicker.Windows;
 
 import com.seishin.cookieclicker.daemons.MinerDaemon;
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -22,8 +25,10 @@ public class MainWindow extends javax.swing.JFrame implements Runnable {
     MinerDaemon minerDaemon;
     DecimalFormat f;
 
-    public MainWindow() {
+    public MainWindow() throws IOException, InterruptedException {
         minerDaemon = new MinerDaemon();
+        minerDaemon.loadGame();
+        Thread.sleep(1000);
         minerDaemonThread = new Thread(minerDaemon);
         minerDaemonThread.start();
 
@@ -46,6 +51,7 @@ public class MainWindow extends javax.swing.JFrame implements Runnable {
         cookieBtn = new javax.swing.JButton();
         mainToolBar = new javax.swing.JToolBar();
         exitBtn = new javax.swing.JButton();
+        restartBtn = new javax.swing.JButton();
         cookiesPerSecondValueLabel = new javax.swing.JLabel();
         cookiesPerClickValueLabel = new javax.swing.JLabel();
         cookiesValueLabel = new javax.swing.JLabel();
@@ -98,6 +104,17 @@ public class MainWindow extends javax.swing.JFrame implements Runnable {
             }
         });
         mainToolBar.add(exitBtn);
+
+        restartBtn.setText("Neustart");
+        restartBtn.setFocusable(false);
+        restartBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        restartBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        restartBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                restartBtnActionPerformed(evt);
+            }
+        });
+        mainToolBar.add(restartBtn);
 
         cookiesPerSecondValueLabel.setText(f.format(minerDaemon.getCookiesPerSecond()));
 
@@ -264,6 +281,13 @@ public class MainWindow extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_dealerBtnActionPerformed
 
+    private void restartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartBtnActionPerformed
+        minerDaemonThread.interrupt();
+        minerDaemon = new MinerDaemon();
+        minerDaemonThread = new Thread(minerDaemon);
+        minerDaemonThread.start();
+    }//GEN-LAST:event_restartBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cookieBtn;
@@ -285,6 +309,7 @@ public class MainWindow extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel farmValLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JToolBar mainToolBar;
+    private javax.swing.JButton restartBtn;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -293,7 +318,14 @@ public class MainWindow extends javax.swing.JFrame implements Runnable {
             this.cookiesValueLabel.setText(f.format(minerDaemon.getCookiesValue()));
             this.cookiesPerClickValueLabel.setText(f.format(minerDaemon.getCookiesPerClick()));
             this.cookiesPerSecondValueLabel.setText(f.format(minerDaemon.getCookiesPerSecond()));
+            try {
+                minerDaemon.saveGame();
+                Thread.sleep(100);
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-
     }
 }
